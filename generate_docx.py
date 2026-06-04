@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Word (.docx) formatında "Nihai Karar Destek Sistemi Analiz Raporu" oluşturucu betik.
-İşlemlerdeki ham LaTeX kodları, dolar işaretleri ($) ve \times gibi ham semboller temizlenmiştir.
-Bütün formüller, İl Müdürü'nün ve saha personelinin rahatça okuyabileceği temiz yazı formatında sunulmuştur.
+Dosya bozulma risklerini ortadan kaldırmak için şema dışı düşük seviyeli XML modifikasyonları temizlenmiştir.
+Tüm formüller, İl Müdürü'nün ve saha personelinin rahatça okuyabileceği temiz yazı formatında sunulmuştur.
 """
 
 import os
@@ -24,8 +24,6 @@ import docx
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.oxml import OxmlElement, parse_xml
-from docx.oxml.ns import qn, nsdecls
 
 def create_report():
     dest_dir = r"C:\Users\AYŞE\OneDrive\Desktop\FinalÖdevi\simülasyon2"
@@ -84,15 +82,9 @@ def create_report():
         h_run.bold = True
         h_run.font.name = 'Arial'
         h_run.font.size = Pt(13)
-        h_run.font.color.rgb = RGBColor(31, 41, 55)
+        h_run.font.color.rgb = RGBColor(37, 99, 235) # Şık Mavi Renk (Bozulma riski oluşturan XML kenarlık kodu yerine güvenli renklendirme)
         h.paragraph_format.space_before = Pt(space_before)
         h.paragraph_format.space_after = Pt(6)
-        # Sola kenarlık efekti xml ekleme
-        pPr = h._p.get_or_add_pPr()
-        pBdr = parse_xml(r'<w:pBdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
-                         r'<w:left w:val="single" w:sz="24" w:space="8" w:color="3B82F6"/>'
-                         r'</w:pBdr>')
-        pPr.append(pBdr)
         return h
 
     # Alt Başlık Fonksiyonu
