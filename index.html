@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İl Tarım ve Orman Müdürlüğü Karar Destek Simülasyonu Paneli</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-logo">
+                <span class="badge">Çok Değişkenli Karar Destek Simülasyonu</span>
+            </div>
+            <h1>İl Tarım ve Orman Müdürlüğü Karar Destek Simülasyonu Paneli</h1>
+            <p class="subtitle">FAO (33, 56, 66) & IPCC Standartlarında Canlı 2026 İklim Modellemesi ve Çok Değişkenli Rezervuar Yönetim Çözümü</p>
+        </header>
+
+        <!-- Main Layout Grid -->
+        <main class="dashboard-content">
+            
+            <!-- Controls Section -->
+            <section class="card glass-card control-section">
+                <div class="control-header">
+                    <h2>Otorite Kontrol Paneli</h2>
+                    <span class="info-note">Aşağıdaki sürgüleri kullanarak iklim ve kaynak parametrelerini dinamik olarak değiştirebilirsiniz.</span>
+                </div>
+                
+                <div class="sliders-grid">
+                    <!-- A Grubu -->
+                    <div class="slider-group">
+                        <h3>A) Politika ve Kaynak Yönetimi Sürgüleri</h3>
+                        
+                        <div class="slider-wrapper">
+                            <label for="quota-slider" class="slider-label">
+                                <span>Verilen Su Kotası (verilen_su_kotasi):</span>
+                                <span id="quota-value" class="slider-output">400 mm</span>
+                            </label>
+                            <input type="range" id="quota-slider" min="200" max="600" step="10" value="400" class="premium-slider">
+                            <div class="slider-ticks">
+                                <span>200 mm</span>
+                                <span>400 mm</span>
+                                <span>600 mm</span>
+                            </div>
+                        </div>
+
+                        <div class="slider-wrapper">
+                            <label for="release-slider" class="slider-label">
+                                <span>Günlük Baraj Çekimi (gunluk_baraj_cekimi):</span>
+                                <span id="release-value" class="slider-output">500 m³</span>
+                            </label>
+                            <input type="range" id="release-slider" min="200" max="800" step="50" value="500" class="premium-slider">
+                            <div class="slider-ticks">
+                                <span>200 m³</span>
+                                <span>500 m³</span>
+                                <span>800 m³</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- B Grubu -->
+                    <div class="slider-group">
+                        <h3>B) İklim ve Çevresel Faktör Sürgüleri</h3>
+                        
+                        <div class="slider-wrapper">
+                            <label for="rain-slider" class="slider-label">
+                                <span>Doğal Mevsimsel Yağış (dogal_yagis):</span>
+                                <span id="rain-value" class="slider-output">150 mm</span>
+                            </label>
+                            <input type="range" id="rain-slider" min="50" max="300" step="10" value="150" class="premium-slider">
+                            <div class="slider-ticks">
+                                <span>50 mm</span>
+                                <span>175 mm</span>
+                                <span>300 mm</span>
+                            </div>
+                        </div>
+
+                        <div class="slider-wrapper">
+                            <label for="req-slider" class="slider-label">
+                                <span>Bitki İdeal Su İhtiyacı (ideal_su_ihtiyaci):</span>
+                                <span id="req-value" class="slider-output">600 mm</span>
+                            </label>
+                            <input type="range" id="req-slider" min="400" max="800" step="50" value="600" class="premium-slider">
+                            <div class="slider-ticks">
+                                <span>400 mm</span>
+                                <span>600 mm</span>
+                                <span>800 mm</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPI Cards Row -->
+            <section class="kpi-container">
+                <div class="card glass-card kpi-card">
+                    <div class="kpi-icon icon-yield">🌱</div>
+                    <div class="kpi-data">
+                        <h3>Toplam Bölgesel Rekolte</h3>
+                        <p id="kpi-total-yield" class="kpi-value">0.00 Ton</p>
+                        <span id="kpi-status-yield" class="kpi-subtext">Yükleniyor...</span>
+                    </div>
+                </div>
+                <div class="card glass-card kpi-card">
+                    <div class="kpi-icon icon-savings">💧</div>
+                    <div class="kpi-data">
+                        <h3>Toplam Baraj Su Tasarrufu</h3>
+                        <p id="kpi-total-savings" class="kpi-value">0 m³</p>
+                        <span class="kpi-subtext">Kısılan su kotasından elde edilen</span>
+                    </div>
+                </div>
+                <div class="card glass-card kpi-card">
+                    <div class="kpi-icon icon-dam">🔋</div>
+                    <div class="kpi-data">
+                        <h3>Baraj Ömrü Uzama Süresi</h3>
+                        <p id="kpi-dam-extension" class="kpi-value">+0 Gün</p>
+                        <span class="kpi-subtext">Çok değişkenli rezervuar ömür uzatması</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-grid">
+                <div class="card glass-card chart-card">
+                    <h3>Su Kotasına Göre Bölgesel Toplam Rekolte Dünyası (Çizgi Grafik)</h3>
+                    <div class="chart-container">
+                        <canvas id="yield-chart"></canvas>
+                    </div>
+                </div>
+                <div class="card glass-card chart-card">
+                    <h3>Su Kotası Azaldıkça Baraj Ömrünün Gün Bazında Uzaması (Bar Grafik)</h3>
+                    <div class="chart-container">
+                        <canvas id="dam-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Table Section -->
+            <section class="card glass-card table-section">
+                <div class="table-header">
+                    <h2>Bölgesel 100 Tarla Detaylı Durum Listesi</h2>
+                    <button id="download-csv-btn" class="btn btn-primary">CSV Olarak Dışa Aktar</button>
+                </div>
+                <div class="table-container">
+                    <table class="premium-table">
+                        <thead>
+                            <tr>
+                                <th>Tarla ID</th>
+                                <th>Tarla Alanı (Dekar)</th>
+                                <th>Toprak Verimlilik Çarpanı</th>
+                                <th>Verilen Su Kotası (mm)</th>
+                                <th>Üretilen Ürün (Ton)</th>
+                                <th>Tasarruf Edilen Su (m³)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fields-table-body">
+                            <!-- JS ile doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- References / Kaynakça Bölümü -->
+            <section class="references-section">
+                <button id="toggle-references-btn" class="btn btn-secondary">Kaynakça (8 Akademik Referans)</button>
+                <div id="references-content" class="card glass-card references-card hidden">
+                    <h3>Akademik Referanslar ve Karar Destek Kaynakçası</h3>
+                    <ul class="references-list">
+                        <li><strong>FAO Paper 56 (Allen et al., 1998):</strong> Crop evapotranspiration-Guidelines for computing crop water requirements-FAO Irrigation and drainage paper 56. FAO, Rome.</li>
+                        <li><strong>FAO Paper 33 (Doorenbos & Kassam, 1979):</strong> Yield response to water. FAO Irrigation and Drainage Paper, 33, 257.</li>
+                        <li><strong>FAO Paper 66 (Steduto et al., 2012):</strong> Crop yield response to water. FAO Irrigation and Drainage Paper, 66.</li>
+                        <li><strong>Loucks (2005):</strong> Water resources systems planning and management: An introduction to methods, models and applications. UNESCO.</li>
+                        <li><strong>IPCC (2023):</strong> Climate Change 2023: Synthesis Report. Contribution of Working Groups I, II and III to the Sixth Assessment Report. IPCC, Geneva.</li>
+                        <li><strong>Shiklomanov (2000):</strong> Appraisal and assessment of world water resources. Water International, 25(1), 11-32.</li>
+                        <li><strong>Gleick (2003):</strong> Global water paths. Water Policy, 5(2), 115-132.</li>
+                        <li><strong>Postel (2000):</strong> Entering an era of water scarcity: The challenges ahead. Ecological Applications, 10(4), 941-948.</li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+        
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>© 2026 İl Tarım ve Orman Müdürlüğü - Tüm hakları saklıdır. Çok Değişkenli Karar Destek Simülasyon Sistemi.</p>
+        </footer>
+    </div>
+
+    <!-- JS Entegrasyonu -->
+    <script src="app.js"></script>
+</body>
+</html>
