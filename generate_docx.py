@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Word (.docx) formatında "Nihai Karar Destek Sistemi Analiz Raporu" oluşturucu v5 betik.
-Paragraflar arası gereksiz boşlukları engellemek için tüm yeni satır ifadeleri (\n)
-ve listeler ayrı ayrı paragraf nesneleri olarak bölünmüştür.
-LaTeX denklemleri, akademik derinlik ve sıfır yapay zeka klişesi kurallarına tam uyumludur.
+Word (.docx) formatında "Nihai Karar Destek Sistemi Analiz Raporu" oluşturucu betik.
+İşlemlerdeki ham LaTeX kodları, dolar işaretleri ($) ve \times gibi ham semboller temizlenmiştir.
+Bütün formüller, İl Müdürü'nün ve saha personelinin rahatça okuyabileceği temiz yazı formatında sunulmuştur.
 """
 
 import os
@@ -116,17 +115,18 @@ def create_report():
         run.font.name = 'Arial'
         run.font.size = Pt(10.5)
         run.font.color.rgb = RGBColor(31, 41, 55)
-        p.paragraph_format.space_after = Pt(6) # Boşluklar azaltıldı
+        p.paragraph_format.space_after = Pt(6)
         p.paragraph_format.line_spacing = 1.15
         return p
 
-    # LaTeX Denklem Ekleme Fonksiyonu (Merkez Hizalı)
-    def add_equation(text):
+    # Temiz Matematiksel Formül Ekleme Fonksiyonu (Merkez Hizalı, Dolar ve LaTeX Kodsuz)
+    def add_formula(text):
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = p.add_run(text)
-        run.font.name = 'Courier New'
+        run.font.name = 'Arial'
         run.font.size = Pt(11)
+        run.font.bold = True
         run.font.color.rgb = RGBColor(17, 24, 39)
         p.paragraph_format.space_before = Pt(4)
         p.paragraph_format.space_after = Pt(4)
@@ -164,7 +164,7 @@ def create_report():
     add_heading("BÖLÜM 1: YÖNETİCİ ÖZETİ (EXECUTIVE SUMMARY)", space_before=12)
     add_body("Sayın İl Müdürü,")
     add_body(
-        "İl sınırlarımız içerisindeki tarımsal alanların sulanması ve içme suyu sağlayan baraj göllerimizin ömrünün korunması, iklim krizinin etkilerini derinden hissettiğimiz bugünlerde birbirine tamamen zıt iki idari hedefi oluşturmaktadır. Çiftçilerimize destek olmak ve bölgesel ürün üretimini en üst duyeye çıkarmak adına arazilere sınırsız sulama suyu verilmesi baraj göllerimizin hızla kurumasına sebep olmaktadır. Tam aksine, baraj suyunu korumak adına sulamayı aşırı düzeyde kısmak ise tarlalardaki ürünlerin kurumasına, çiftçilerimizin zarar etmesine ve gıda arzında büyük bir kriz yaşanmasına yol açmaktadır. İl Tarım ve Orman Müdürlüğü olarak idari görevimiz, tarlalardan aldığımız mahsul miktarı ile barajımızda kalan su süresi arasındaki en doğru dengeyi bilimsel verilerle bulmaktır."
+        "İl sınırlarımız içerisindeki tarımsal alanların sulanması ve içme suyu sağlayan baraj göllerimizin ömrünün korunması, iklim krizinin etkilerini derinden hissettiğimiz bugünlerde birbirine tamamen zıt iki idari hedefi oluşturmaktadır. Çiftçilerimize destek olmak ve bölgesel ürün üretimini en üst düzeyde çıkarmak adına arazilere sınırsız sulama suyu verilmesi baraj göllerimizin hızla kurumasına sebep olmaktadır. Tam aksine, baraj suyunu korumak adına sulamayı aşırı düzeyde kısmak ise tarlalardaki ürünlerin kurumasına, çiftçilerimizin zarar etmesine ve gıda arzında büyük bir kriz yaşanmasına yol açmaktadır. İl Tarım ve Orman Müdürlüğü olarak idari görevimiz, tarlalardan aldığımız mahsul miktarı ile barajımızda kalan su süresi arasındaki en doğru dengeyi bilimsel verilerle bulmaktır."
     )
     add_body(
         "Bu rapor kapsamında sunulan karar destek simülasyonu, su kotası ve baraj çekim kararlarının bölgesel rekolte ile baraj ömrü üzerindeki etkilerini eşzamanlı ve deterministik olarak tahmin etmektedir. Geliştirilen analitik model, Gıda ve Tarım Örgütü (FAO) standartlarındaki bitki stres tepki algoritmaları ile Loucks hidrolik rezervuar yönetim denklemlerini entegre etmektedir. Politika tasarım mimarisi, karar vericinin idari yetki alanındaki girdileri ile dışsal iklim faktörlerini birleştirerek anlık verim ve tasarruf çıktısı üretmektedir. Raporun sunumu, idari kararların tamamen sayısal verilere dayalı, şeffaf ve bilimsel bir yapıda şekillendirilmesini amaçlamaktadır."
@@ -180,18 +180,18 @@ def create_report():
     
     add_subheading("2.1 Politika ve Kaynak Yönetimi Girdileri (Kontrol Edilebilir Sürgüler)")
     add_body(
-        "1. Verilen Su Kotası ($verilen\\_su\\_kotasi$): Bizim tarlalara vanalardan yapay olarak akıttığımız sulama suyu derinliğini ifade eder. Kullanıcı arayüzünde $200\\text{ mm}$ ile $600\\text{ mm}$ limitleri arasında ayarlanabilmektedir. İdeal planlama değeri $600\\text{ mm}$ seviyesindedir. Tıpkı bir çiçeği bardakla sulamak gibidir."
+        "1. Verilen Su Kotası (verilen_su_kotasi): Bizim tarlalara vanalardan yapay olarak akıttığımız sulama suyu derinliğini ifade eder. Kullanıcı arayüzünde 200 mm ile 600 mm limitleri arasında ayarlanabilmektedir. İdeal planlama değeri 600 mm seviyesindedir. Tıpkı bir çiçeği bardakla sulamak gibidir."
     )
     add_body(
-        "2. Günlük Baraj Çekimi ($gunluk\\_baraj\\_cekimi$): Barajımızın sulama şebekesine giden musluğunu ne kadar çok açtığımızı gösterir. Arayüzde $200\\text{ m}^3/\\text{gün}$ ile $800\\text{ m}^3/\\text{gün}$ arasında değiştirilebilir. Standart planlama değeri $500\\text{ m}^3/\\text{gün}$ düzeyindedir. Musluğu çok açarsak baraj hızlı boşalır, az açarsak içindeki suyu korumuş oluruz."
+        "2. Günlük Baraj Çekimi (gunluk_baraj_cekimi): Barajımızın sulama şebekesine giden musluğunu ne kadar çok açtığımızı gösterir. Arayüzde 200 m3/gün ile 800 m3/gün arasında değiştirilebilir. Standart planlama değeri 500 m3/gün düzeyindedir. Musluğu çok açarsak baraj hızlı boşalır, az açarsak içindeki suyu korumuş oluruz."
     )
     
     add_subheading("2.2 İklim ve Çevresel Faktörler (Dışsal Girdiler)")
     add_body(
-        "1. Doğal Yağış ($dogal\\_yagis$): Gökyüzünden bulutlar aracılığıyla arazilere doğrudan düşen yağmur miktarıdır. Bizim kontrolümüz dışındadır. Sürgü aralığı $50\\text{ mm}$ ila $300\\text{ mm}$ arasında olup, standart mevsim ortalaması $150\\text{ mm}$'dir."
+        "1. Doğal Yağış (dogal_yagis): Gökyüzünden bulutlar aracılığıyla arazilere doğrudan düşen yağmur miktarıdır. Bizim kontrolümüz dışındadır. Sürgü aralığı 50 mm ila 300 mm arasında olup, standart mevsim ortalaması 150 mm'dir."
     )
     add_body(
-        "2. Bitki İdeal Su İhtiyacı ($ideal\\_su\\_ihtiyaci$): Ekilen ürünün gelişim döngüsünü susuz kalmadan, en mutlu şekilde büyümesi için içmek istediği toplam su derinliğidir. Sürgü aralığı $400\\text{ mm}$ ile $800\\text{ mm}$ arasında olup, temel hesaplamalarda $600\\text{ mm}$ olarak kabul edilmiştir."
+        "2. Bitki İdeal Su İhtiyacı (ideal_su_ihtiyaci): Ekilen ürünün gelişim döngüsünü susuz kalmadan, en mutlu şekilde büyümesi için içmek istediği toplam su derinliğidir. Sürgü aralığı 400 mm ile 800 mm arasında olup, temel hesaplamalarda 600 mm olarak kabul edilmiştir."
     )
 
     # Şekil 2 Ekle
@@ -199,7 +199,7 @@ def create_report():
     add_figure(fig2_path, "Şekil 2: Çok Değişkenli Canlı Sürgüler ve Dinamik KPI Gösterge Paneli (yonetici_paneli.png)")
 
     add_body(
-        "Şekil 2'de sunulan web kontrol panelinde, idari veya iklimsel sürgüler kaydırıldığı anda arka planda çalışan matematiksel motor hesaplamaları tetiklemekte ve üç temel KPI göstergesini güncellemektedir. Bu göstergeler sırasıyla; toplam tarımsal üretimi yansıtan 'Toplam Bölgesel Rekolte (Ton)', barajda biriken su hacmini ifade eden 'Toplam Baraj Su Tasarrufu ($m^3$)' ve rezervuarın operasyonel ömründeki artışı gösteren 'Baraj Ömrü Uzama Süresi (Gün)' değerleridir. Dinamik arayüz sayesinde idari kararların makro etkileri eşzamanlı olarak takip edilmektedir."
+        "Şekil 2'de sunulan web kontrol panelinde, idari veya iklimsel sürgüler kaydırıldığı anda arka planda çalışan matematiksel motor hesaplamaları tetiklemekte ve üç temel KPI göstergesini güncellemektedir. Bu göstergeler sırasıyla; toplam tarımsal üretimi yansıtan 'Toplam Bölgesel Rekolte (Ton)', barajda biriken su hacmini ifade eden 'Toplam Baraj Su Tasarrufu (m3)' ve rezervuarın operasyonel ömründeki artışı gösteren 'Baraj Ömrü Uzama Süresi (Gün)' değerleridir. Dinamik arayüz sayesinde idari kararların makro etkileri eşzamanlı olarak takip edilmektedir."
     )
 
     # Sürgü Detay Alt Şekilleri
@@ -219,21 +219,17 @@ def create_report():
     
     add_subheading("3.1 Deterministik Veri Ambarı (Rastgelelik Yasağı İspatı)")
     add_body(
-        "Simülasyon kapsamında değerlendirilen $100$ adet tarımsal arazinin alan ve toprak verimlilik çarpanı değerleri, her çalışma aşamasında aynı sonuçları üretecek şekilde matematiksel olarak formüle edilmiştir. Bölgemizde 100 farklı tarla vardır. Bu tarlaların her birinin büyüklüğü ve toprak kalitesi birbirinden farklıdır. Hocamızın kuralı gereği, bu tarlaları rastgele yazı tura atarak değil, belli matematiksel kurallara göre hazırladık. Arazi indeksini $i$ ($i = 1, 2, \\dots, 100$) temsil etmek üzere formüller şu şekildedir:"
+        "Simülasyon kapsamında değerlendirilen 100 adet tarımsal arazinin alan ve toprak verimlilik çarpanı değerleri, her çalışma aşamasında aynı sonuçları üretecek şekilde matematiksel olarak formüle edilmiştir. Bölgemizde 100 farklı tarla vardır. Bu tarlaların her birinin büyüklüğü ve toprak kalitesi birbirinden farklıdır. Hocamızın kuralı gereği, bu tarlaları rastgele yazı tura atarak değil, belli matematiksel kurallara göre hazırladık. Arazi indeksini i (i = 1, 2, ..., 100) temsil etmek üzere formüller şu şekildedir:"
     )
 
     add_body("Her bir arazinin büyüklüğü (da) şu formülle hesaplanır:")
-    add_equation(
-        "$$alan_i = 10 + (i \\pmod 5)$$"
-    )
+    add_formula("alan_i = 10 + (i mod 5)")
+    
     add_body("Bölgedeki tarlaların toplam alanı bu formülden hareketle sabit bir değer almaktadır ve her çalıştırıldığında tam olarak aynı kalmaktadır:")
-    add_equation(
-        "$$Toplam\\_Alan = \\sum_{i=1}^{100} alan_i = 1200\\text{ dekar (da)}$$"
-    )
-    add_body("Her bir arazinin toprak yapısındaki organik madde ve besin elementi değişkenliğini yansıtan toprak verimlilik çarpanı ($toprak\\_faktoru_i$) ise trigonometrik bir dalgalanma (sinüs dalgası) ile belirlenmiştir:")
-    add_equation(
-        "$$toprak\\_faktoru_i = 1.0 + 0.1 \\times \\sin(i)$$"
-    )
+    add_formula("Toplam_Alan = alan_1 + alan_2 + ... + alan_100 = 1200 dekar (da)")
+    
+    add_body("Her bir arazinin toprak yapısındaki organik madde ve besin elementi değişkenliğini yansıtan toprak verimlilik çarpanı (toprak_faktoru_i) ise trigonometrik bir dalgalanma (sinüs dalgası) ile belirlenmiştir:")
+    add_formula("toprak_faktoru_i = 1.0 + 0.1 * sin(i)")
 
     # Şekil 3 Ekle
     fig3_path = os.path.join(dest_dir, "tarla_tablosu.png")
@@ -245,39 +241,31 @@ def create_report():
 
     add_subheading("3.2 Biyolojik Bitki Stres Modeli (FAO 33 & 66)")
     add_body(
-        "Tarlaya giren toplam su girdisi ($toplam\\_su$), sulama suyu ile doğal yağışın toplamından oluşur. Tıpkı bitkiye hem gökyüzünden yağmur yağması hem de bizim yapay sulama yapmamız gibidir:"
+        "Tarlaya giren toplam su girdisi (toplam_su), sulama suyu ile doğal yağışın toplamından oluşur. Tıpkı bitkiye hem gökyüzünden yağmur yağması hem de bizim yapay sulama yapmamız gibidir:"
     )
-    add_equation(
-        "$$toplam\\_su = verilen\\_su\\_kotasi + dogal\\_yagis$$"
-    )
+    add_formula("toplam_su = verilen_su_kotasi + dogal_yagis")
+    
     add_body(
-        "Bitkinin en mutlu olacağı ve maksimum gelişim gösterebileceği su ihtiyacının üst sınırı ($ust\\_limit\\_su$), ideal su ihtiyacına $150\\text{ mm}$ eklenerek bulunur:"
+        "Bitkinin en mutlu olacağı ve maksimum gelişim gösterebileceği su ihtiyacının üst sınırı (ust_limit_su), ideal su ihtiyacına 150 mm eklenerek bulunur:"
     )
-    add_equation(
-        "$$ust\\_limit\\_su = ideal\\_su\\_ihtiyaci + 150$$"
-    )
+    add_formula("ust_limit_su = ideal_su_ihtiyaci + 150")
+    
     add_body(
-        "Bitkide susuzluk stresinin başladığı ve bitkinin kurumaya yüz tuttuğu kritik tehlike eşiği, dinamik alt limit ($alt\\_limit\\_su$) olarak tanımlanmıştır. Bu eşik, üst limitin $0.533$ katıdır. Eğer arazilere verilen su bu sınırın altına düşerse bitki aniden kuruma sürecine girer:"
+        "Bitkide susuzluk stresinin başladığı ve bitkinin kurumaya yüz tuttuğu kritik tehlike eşiği, dinamik alt limit (alt_limit_su) olarak tanımlanmıştır. Bu eşik, üst limitin 0.533 katıdır. Eğer arazilere verilen su bu sınırın altına düşerse bitki aniden kuruma sürecine girer:"
     )
-    add_equation(
-        "$$alt\\_limit\\_su = ust\\_limit\\_su \\times 0.533$$"
-    )
+    add_formula("alt_limit_su = ust_limit_su * 0.533")
+    
     add_body(
-        "Bitkisel verim oranı ($verim\\_orani$), toplam su girdisine bağlı olarak parçalı bir matematiksel fonksiyon halinde hesaplanmaktadır. Bitki verimi, suya göre üç farklı durumda değerlendirilir:"
+        "Bitkisel verim oranı (verim_orani), toplam su girdisine bağlı olarak parçalı bir matematiksel fonksiyon halinde hesaplanmaktadır. Bitki verimi, suya göre üç farklı durumda değerlendirilir:"
     )
-    add_equation(
-        "$$verim\\_orani = \\begin{cases} \n"
-        "1.0, & \\text{eğer } toplam\\_su \\ge ust\\_limit\\_su \\\\\n"
-        "\\frac{toplam\\_su}{ust\\_limit\\_su}, & \\text{eğer } alt\\_limit\\_su \\le toplam\\_su < ust\\_limit\\_su \\\\\n"
-        "\\left(\\frac{toplam\\_su}{ust\\_limit\\_su}\\right) \\times 0.3, & \\text{eğer } toplam\\_su < alt\\_limit\\_su\n"
-        "\\end{cases}$$"
-    )
+    add_formula("Toplam su, ust_limit_su değerinden büyük veya eşitse: verim_orani = 1.0")
+    add_formula("Toplam su, alt_limit_su ile ust_limit_su arasındaysa: verim_orani = toplam_su / ust_limit_su")
+    add_formula("Toplam su, alt_limit_su değerinden küçükse: verim_orani = (toplam_su / ust_limit_su) * 0.3")
+    
     add_body(
-        "Belirlenen su kotası kritik kuruma eşiğinin ($alt\\_limit\\_su$) altına indiğinde verim oranının aniden düşmesi ($0.3$ katsayılı ceza fonksiyonu) bitkinin kurumaya başlamasından kaynaklanır ve FAO standartlarına dayanmaktadır. i tarlasından elde edilecek ürün miktarı ($Uretilen\\_Urun\\_Ton_i$), baz verim katsayısı ($0.8\\text{ Ton/dekar}$) kullanılarak şu şekilde bulunur:"
+        "Belirlenen su kotası kritik kuruma eşiğinin (alt_limit_su) altına indiğinde verim oranının aniden düşmesi (0.3 katsayılı ceza fonksiyonu) bitkinin kurumaya başlamasından kaynaklanır ve FAO standartlarına dayanmaktadır. i tarlasından elde edilecek ürün miktarı (Uretilen_Urun_Ton_i), baz verim katsayısı (0.8 Ton/dekar) kullanılarak şu şekilde bulunur:"
     )
-    add_equation(
-        "$$Uretilen\\_Urun\\_Ton_i = alan_i \\times 0.8 \\times verim\\_orani \\times toprak\\_faktoru_i$$"
-    )
+    add_formula("Uretilen_Urun_Ton_i = alan_i * 0.8 * verim_orani * toprak_faktoru_i")
 
     # Şekil 1 Ekle
     fig1_path = os.path.join(dest_dir, "su_kotasi_analiz.png")
@@ -289,29 +277,24 @@ def create_report():
 
     add_subheading("3.3 Hidrolik Rezervuar Optimizasyonu (Loucks Modeli)")
     add_body(
-        "Tarımsal sulamada yapılan su kısıntısı, baraj rezervuarında hacimsel bir su tasarrufu oluşturmaktadır. Kısılan su miktarı ($kisilan\\_su\\_mm$):"
+        "Tarımsal sulamada yapılan su kısıntısı, baraj rezervuarında hacimsel bir su tasarrufu oluşturmaktadır. Kısılan su miktarı (kisilan_su_mm):"
     )
-    add_equation(
-        "$$kisilan\\_su\\_mm = \\max(0.0, ideal\\_su\\_ihtiyaci - verilen\\_su\\_kotasi)$$"
-    )
+    add_formula("kisilan_su_mm = En Büyük Değer(0, ideal_su_ihtiyaci - verilen_su_kotasi)")
+    
     add_body(
-        "Her bir araziden elde edilen hacimsel su tasarrufu ($Tasarruf\\_m_i^3$), alan ile çarpılarak hesaplanır:"
+        "Her bir araziden elde edilen hacimsel su tasarrufu (Tasarruf_m3_i), alan ile çarpılarak hesaplanır:"
     )
-    add_equation(
-        "$$Tasarruf\\_m_i^3 = kisilan\\_su\\_mm \\times alan_i$$"
-    )
+    add_formula("Tasarruf_m3_i = kisilan_su_mm * alan_i")
+    
     add_body(
-        "Bölgesel bazda elde edilen toplam su tasarrufu ($Toplam\\_Tasarruf$) şu formülle bulunur:"
+        "Bölgesel bazda elde edilen toplam su tasarrufu (Toplam_Tasarruf) şu formülle bulunur:"
     )
-    add_equation(
-        "$$Toplam\\_Tasarruf = \\sum_{i=1}^{100} Tasarruf\\_m_i^3$$"
-    )
+    add_formula("Toplam_Tasarruf = Tasarruf_m3_1 + Tasarruf_m3_2 + ... + Tasarruf_m3_100")
+    
     add_body(
-        "Tasarruf edilen suyun, barajın günlük çekim debisine bölünmesiyle rezervuar ömründeki uzama gün sayısı ($Baraj\\_Omru\\_Uzama$) hesaplanmaktadır. Barajdan ne kadar az su çekersek, barajımız o kadar çok gün boyunca su vermeye devam eder:"
+        "Tasarruf edilen suyun, barajın günlük çekim debisine bölünmesiyle rezervuar ömründeki uzama gün sayısı (Baraj_Omru_Uzama) hesaplanmaktadır. Barajdan ne kadar az su çekersek, barajımız o kadar çok gün boyunca su vermeye devam eder:"
     )
-    add_equation(
-        "$$Baraj\\_Omru\\_Uzama = \\frac{Toplam\\_Tasarruf}{gunluk\\_baraj\\_cekimi}$$"
-    )
+    add_formula("Baraj_Omru_Uzama = Toplam_Tasarruf / gunluk_baraj_cekimi")
 
     # ----------------------------------------------------
     # BÖLÜM 4: KRİZ SENARYOLARI
@@ -323,38 +306,38 @@ def create_report():
     
     add_subheading("4.1 Senaryo A: Dengeli Politika Yönetimi (Optimum Denge)")
     add_body("Standart iklim koşullarında baraj ömrünün korunması ile kabul edilebilir düzeyde rekolte elde edilmesini öngören temel senaryodur. Bu durumda baraj ömrü de dengeli uzamaktadır.")
-    add_body("- Parametreler: $verilen\\_su\\_kotasi = 400\\text{ mm}$, $dogal\\_yagis = 150\\text{ mm}$, $ideal\\_su\\_ihtiyaci = 600\\text{ mm}$, $gunluk\\_baraj\\_cekimi = 500\\text{ m}^3/\\text{gün}$")
+    add_body("- Parametreler: verilen_su_kotasi = 400 mm, dogal_yagis = 150 mm, ideal_su_ihtiyaci = 600 mm, gunluk_baraj_cekimi = 500 m3/gün")
     add_body("- Hesaplamalar:")
-    add_body("  * Toplam su: $400 + 150 = 550\\text{ mm}$")
-    add_body("  * En mutlu bitki su sınırı: $600 + 150 = 750\\text{ mm}$")
-    add_body("  * Kuruma sınırı: $750 \\times 0.533 = 399.75\\text{ mm}$")
-    add_body("  * Toplam su ($550\\text{ mm}$), alt ve üst limitler arasında yer aldığından doğrusal verim oranı: $550 / 750 \\approx 0.7333$ (%73.33 verim).")
-    add_body("  * Kısılan su: $600 - 400 = 200\\text{ mm}$. Toplam baraj tasarrufu: $200\\text{ mm} \\times 1200\\text{ da} = 240.000\\text{ m}^3$.")
-    add_body("  * Baraj ömrü uzaması: $240.000 / 500 = 480.0\\text{ Gün}$.")
-    add_body("- Sonuç: Bölgesel toplam rekolte $703.87\\text{ Ton}$ seviyesinde gerçekleşirken, baraj ömrü $+480.0\\text{ Gün}$ uzatılmıştır.")
+    add_body("  * Toplam su: 400 + 150 = 550 mm")
+    add_body("  * En mutlu bitki su sınırı: 600 + 150 = 750 mm")
+    add_body("  * Kuruma sınırı: 750 * 0.533 = 399.75 mm")
+    add_body("  * Toplam su (550 mm), alt ve üst limitler arasında yer aldığından doğrusal verim oranı: 550 / 750 = 0.7333 (%73.33 verim).")
+    add_body("  * Kısılan su: 600 - 400 = 200 mm. Toplam baraj tasarrufu: 200 mm * 1200 da = 240.000 m3.")
+    add_body("  * Baraj ömrü uzaması: 240.000 / 500 = 480.0 Gün.")
+    add_body("- Sonuç: Bölgesel toplam rekolte 703.87 Ton seviyesinde gerçekleşirken, baraj ömrü +480.0 Gün uzatılmıştır.")
 
     add_subheading("4.2 Senaryo B: IPCC İklim Felaketi (Aşırı Kuraklık)")
     add_body("Doğal yağışın neredeyse durduğu ve rezervuarların korunması için su kotasının aşırı kısıldığı kuraklık krizi senaryosudur.")
-    add_body("- Parametreler: $verilen\\_su\\_kotasi = 200\\text{ mm}$, $dogal\\_yagis = 50\\text{ mm}$, $ideal\\_su\\_ihtiyaci = 600\\text{ mm}$, $gunluk\\_baraj\\_cekimi = 500\\text{ m}^3/\\text{gün}$")
+    add_body("- Parametreler: verilen_su_kotasi = 200 mm, dogal_yagis = 50 mm, ideal_su_ihtiyaci = 600 mm, gunluk_baraj_cekimi = 500 m3/gün")
     add_body("- Hesaplamalar:")
-    add_body("  * Toplam su: $200 + 50 = 250\\text{ mm}$")
-    add_body("  * En mutlu bitki su sınırı: $750\\text{ mm}$, Kuruma sınırı: $399.75\\text{ mm}$")
-    add_body("  * Toplam su ($250\\text{ mm}$), kritik kuruma sınırının ($399.75\\text{ mm}$) altında kaldığı için bitki kuruma stres fonksiyonu devreye girer: $(250 / 750) \\times 0.3 = 0.1000$ (%10.0 verim oranı).")
-    add_body("  * Kısılan su: $600 - 200 = 400\\text{ mm}$. Toplam baraj tasarrufu: $400\\text{ mm} \\times 1200\\text{ da} = 480.000\\text{ m}^3$.")
-    add_body("  * Baraj ömrü uzaması: $480.000 / 500 = 960.0\\text{ Gün}$.")
-    add_body("- Sonuç: Bölgesel toplam rekolte $96.00\\text{ Ton}$ seviyesine gerileyerek tarımsal üretimi durma noktasına getirmiş, öte yandan baraj rezervi $+960.0\\text{ Gün}$ uzatılarak içme suyu güvenliği teminat altına alınmıştır.")
+    add_body("  * Toplam su: 200 + 50 = 250 mm")
+    add_body("  * En mutlu bitki su sınırı: 750 mm, Kuruma sınırı: 399.75 mm")
+    add_body("  * Toplam su (250 mm), kritik kuruma sınırının (399.75 mm) altında kaldığı için bitki kuruma stres fonksiyonu devreye girer: (250 / 750) * 0.3 = 0.1000 (%10.0 verim oranı).")
+    add_body("  * Kısılan su: 600 - 200 = 400 mm. Toplam baraj tasarrufu: 400 mm * 1200 da = 480.000 m3.")
+    add_body("  * Baraj ömrü uzaması: 480.000 / 500 = 960.0 Gün.")
+    add_body("- Sonuç: Bölgesel toplam rekolte 96.00 Ton seviyesine gerileyerek tarımsal üretimi durma noktasına getirmiş, öte yandan baraj rezervi +960.0 Gün uzatılarak içme suyu güvenliği teminat altına alınmıştır.")
 
     add_subheading("4.3 Senaryo C: Adaptif Yönetim (Akıllı Vana Kurtarma Senaryosu)")
     add_body("Yağış verilerinin anlık takip edilerek su kotasının optimize edildiği ve baraj çekiminin artırıldığı akıllı yönetim modelidir.")
-    add_body("- Parametreler: $verilen\\_su\\_kotasi = 590\\text{ mm}$, $dogal\\_yagis = 220\\text{ mm}$, $ideal\\_su\\_ihtiyaci = 750\\text{ mm}$, $gunluk\\_baraj\\_cekimi = 750\\text{ m}^3/\\text{gün}$")
+    add_body("- Parametreler: verilen_su_kotasi = 590 mm, dogal_yagis = 220 mm, ideal_su_ihtiyaci = 750 mm, gunluk_baraj_cekimi = 750 m3/gün")
     add_body("- Hesaplamalar:")
-    add_body("  * Toplam su: $590 + 220 = 810\\text{ mm}$")
-    add_body("  * En mutlu bitki su sınırı: $750 + 150 = 900\\text{ mm}$")
-    add_body("  * Kuruma sınırı: $900 \\times 0.533 = 479.7\\text{ mm}$")
-    add_body("  * Toplam su ($810\\text{ mm}$) stres sınırları arasında kaldığından: $810 / 900 = 0.9000$ (%90.0 verim oranı).")
-    add_body("  * Kısılan su: $750 - 590 = 160\\text{ mm}$. Toplam baraj tasarrufu: $160\\text{ mm} \\times 1200\\text{ da} = 192.000\\text{ m}^3$.")
-    add_body("  * Baraj ömrü uzaması: $192.000 / 750 = 256.0\\text{ Gün}$.")
-    add_body("- Sonuç: Tarımsal üretim kaybı minimize edilerek toplam rekolte $863.84\\text{ Ton}$ seviyesine ulaştırılmış, günlük çekim debisinin yüksek olmasına rağmen baraj ömrü $+256.0\\text{ Gün}$ uzatılmıştır.")
+    add_body("  * Toplam su: 590 + 220 = 810 mm")
+    add_body("  * En mutlu bitki su sınırı: 750 + 150 = 900 mm")
+    add_body("  * Kuruma sınırı: 900 * 0.533 = 479.7 mm")
+    add_body("  * Toplam su (810 mm) stres sınırları arasında kaldığından: 810 / 900 = 0.9000 (%90.0 verim oranı).")
+    add_body("  * Kısılan su: 750 - 590 = 160 mm. Toplam baraj tasarrufu: 160 mm * 1200 da = 192.000 m3.")
+    add_body("  * Baraj ömrü uzaması: 192.000 / 750 = 256.0 Gün.")
+    add_body("- Sonuç: Tarımsal üretim kaybı minimize edilerek toplam rekolte 863.84 Ton seviyesine ulaştırılmış, günlük çekim debisinin yüksek olmasına rağmen baraj ömrü +256.0 Gün uzatılmıştır.")
 
     # ----------------------------------------------------
     # BÖLÜM 5: GÖRSEL GÖSTERGELER (5 YAŞ KURALI)
@@ -420,13 +403,13 @@ def create_report():
         "Gerçekleştirilen duyarlılık analizleri ve simülasyon çıktıları doğrultusunda, İl Tarım ve Orman Müdürlüğü idaresine sunulan somut politika önerileri ve talepler aşağıda maddeler halinde listelenmiştir:"
     )
     add_body(
-        "1. Dinamik İklim-Adaptif Sulama Kotasına Geçilmesi: Bölgedeki tarımsal sulama kotalarının sabit tutulması yerine, mevsimlik doğal yağış ($dogal\\_yagis$) tahminleri izlenerek dinamik şekilde güncellenmesi önerilmektedir. Yağışın $220\\text{ mm}$ düzeyine yükseldiği Senaryo C koşullarında, sulama kotası $590\\text{ mm}$ olarak belirlenerek tarımsal verim %90 seviyesinde tutulurken baraj ömrü de $+256\\text{ gün}$ korunabilmektedir."
+        "1. Dinamik İklim-Adaptif Sulama Kotasına Geçilmesi: Bölgedeki tarımsal sulama kotalarının sabit tutulması yerine, mevsimlik doğal yağış (dogal_yagis) tahminleri izlenerek dinamik şekilde güncellenmesi önerilmektedir. Yağışın 220 mm düzeyine yükseldiği Senaryo C koşullarında, sulama kotası 590 mm olarak belirlenerek tarımsal verim %90 seviyesinde tutulurken baraj ömrü de +256 gün korunabilmektedir."
     )
     add_body(
-        "2. Kritik Kuruma Alarmı Entegrasyonu: Mevsimlik yağışın düştüğü kuraklık periyotlarında sulama suyunun toplam miktarı hiçbir koşulda biyolojik stres eşiği olan $alt\\_limit\\_su$ değerinin altına indirilmemelidir. Eşiğin altına geçilmesi durumunda Senaryo B'de hesaplandığı üzere rekoltede %90 oranında yıkıcı bir çöküş gerçekleşmektedir."
+        "2. Kritik Kuruma Alarmı Entegrasyonu: Mevsimlik yağışın düştüğü kuraklık periyotlarında sulama suyunun toplam miktarı hiçbir koşulda biyolojik stres eşiği olan alt_limit_su değerinin altına indirilmemelidir. Eşiğin altına geçilmesi durumunda Senaryo B'de hesaplandığı üzere rekoltede %90 oranında yıkıcı bir çöküş gerçekleşmektedir."
     )
     add_body(
-        "3. Yüksek Tasarruflu Sulama Şebekesi Teşvikleri: Günlük baraj çekim debisini ($gunluk\\_baraj\\_cekimi$) minimize etmek adına modern damla sulama altyapısına yönelik hibe desteklerinin artırılması talep edilmektedir. Bu sayede baraj ömrü uzama katsayısı daha da yukarı taşınabilecektir."
+        "3. Yüksek Tasarruflu Sulama Şebekesi Teşvikleri: Günlük baraj çekim debisini (gunluk_baraj_cekimi) minimize etmek adına modern damla sulama altyapısına yönelik hibe desteklerinin artırılması talep edilmektedir. Bu sayede baraj ömrü uzama katsayısı daha da yukarı taşınabilecektir."
     )
 
     # ----------------------------------------------------
